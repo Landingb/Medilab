@@ -6,21 +6,28 @@ import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
+import { HttpClientModule } from '@angular/common/http';
+import { AppRoutingModule } from './app.routes';
+import { RouterModule } from '@angular/router';
+
 
 
 @NgModule({
   declarations: [
-    AppComponent, 
     PatientComponent
   ],
   imports: [
     CommonModule,
+    AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule, 
     BrowserModule, 
-    MatTableModule
+    MatTableModule,
+    HttpClientModule,
+    AppComponent,
   ],
-  providers: []
+  providers: [],
+  bootstrap: [AppComponent]
 })
 
 export class AppmoduleModule { }

@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from "@angular/core";
 import {MatTableModule} from '@angular/material/table';
 import { Router } from "@angular/router";
+import { PatientService } from "../services/patient.service";
+import { Patient } from "../models/Patient.model";
 
 
-
-export interface PatientElement {
+/*export interface PatientElement {
   last_name: string;
   first_name: string;
   date_of_birth: string;
@@ -20,8 +21,7 @@ const ELEMENT_DATA: PatientElement[] = [
   {last_name: 'TestInDanger', first_name: 'Test', date_of_birth: '2004-06-18', gender: false, adress: "3 Club Road", phone: '300-444-5555'},
   {last_name: 'TestEarlyOnset', first_name: 'Test', date_of_birth: '2002-06-28', gender: true, adress: "4 Valley D", phone: '400-555-6666'}
 
-]
-
+]*/
 
 @Component({
   selector: 'app-patient',
@@ -30,10 +30,8 @@ const ELEMENT_DATA: PatientElement[] = [
   templateUrl: './patient.component.html',
   styleUrl: './patient.component.css',
 })
-
-
-export class PatientComponent implements OnInit{
-  patient = ELEMENT_DATA;
+export class PatientComponent implements OnInit {
+  patient : Patient[] = [];
   displayedColumns: string[] = ['last_name', 'first_name', 'date_of_birth', 'gender', 'adress', 'phone', 'action'];
   
   last_name!: string;
@@ -43,16 +41,22 @@ export class PatientComponent implements OnInit{
   adress!: string;
   phone!: string;
 
-
-  constructor(private router: Router ) {
+  constructor(private router: Router, private patientService: PatientService ) {
 
   }
 
+  
+
+  // fonction inject pour obtenir une instance de UserService
 
   ngOnInit(): void {
-  // appeler service 
-  ////  this.service.getpatients().subscride(
-  // paetients => this.patient = patients;
+    // appeler service 
+    this.patientService.getPatients().subscribe({
+      next: (patients) => {
+        this.patient = patients;
+      }
+    });
+
   }
 
   verifierDonneesUtilisateur(patient: any) {
@@ -62,5 +66,6 @@ export class PatientComponent implements OnInit{
   }
 
 
-
 }
+
+
